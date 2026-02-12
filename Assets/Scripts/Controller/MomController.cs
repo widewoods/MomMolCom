@@ -16,14 +16,14 @@ public class MomController : MonoBehaviour
     private float leavingDuration = 2.0f;  // 나갈 때 발자국 소리 들리는 시간
 
     public AudioSource audioSource;      // 발자국 소리를 낼 오디오 소스 컴포넌트
-    public AudioClip footstepsClip;      // 발자국 MP3 파일
+    public List<AudioClip> footstepsClips;      // 발자국 MP3 파일
 
     //public GameObject momObject;         // 엄마 게임 오브젝트 (방문 등)
 
     // 노트북 상태 (외부 스크립트에서 이 변수를 제어하거나, 프로퍼티로 연결해야 함)
     public PlayerContorller3D laptop;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +51,9 @@ public class MomController : MonoBehaviour
 
             // 2. 발자국 소리 재생 (경고 단계)
             Debug.Log("발자국 소리가 들림");
-            PlayFootstepSound(); // 소리 재생 함수 호출
+
+            AudioClip footstepsClip = footstepsClips[Random.Range(0, footstepsClips.Count)];
+            PlayFootstepSound(footstepsClip); // 소리 재생 함수 호출
 
             // 3. N초(warningDuration) 만큼 대기 (플레이어가 노트북을 덮을 시간)
             float warningDuration = Random.Range(minWarningDuration, maxWarningDuration);
@@ -87,7 +89,7 @@ public class MomController : MonoBehaviour
 
             Debug.Log("엄마 나감");
 
-            PlayFootstepSound(); // 다시 발자국 소리 재생
+            PlayFootstepSound(footstepsClip); // 다시 발자국 소리 재생
 
             // 나가는 발자국 소리를 얼마나 들려줄지 (예: 2초)
             yield return new WaitForSeconds(leavingDuration);
@@ -97,10 +99,12 @@ public class MomController : MonoBehaviour
     }
 
     // 소리 재생을 편하게 하기 위해 만든 함수
-    void PlayFootstepSound()
+    void PlayFootstepSound(AudioClip footstepsClip)
     {
-        if (audioSource != null && footstepsClip != null)
+        if (audioSource != null && footstepsClips.Count > 0)
         {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.loop = true;
             audioSource.clip = footstepsClip;
             audioSource.Play();
         }
