@@ -993,7 +993,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476271612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1437,7 +1437,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636257042}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2579,7 +2579,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283833836}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -2811,6 +2811,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3a0cefae630e7774bb56e4357abfcb5a, type: 3}
   - {fileID: 8300000, guid: 276dbae42e0d6b741bc61a8216974a91, type: 3}
   - {fileID: 8300000, guid: 64730c800252bdd4eb80b98b6cfa76c6, type: 3}
+  soundContainer: {fileID: 11400000, guid: 428cc7f08807848ed93e594f977c2e3f, type: 2}
 --- !u!4 &1485552511
 Transform:
   m_ObjectHideFlags: 0
@@ -3642,7 +3643,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916222191}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3923,6 +3924,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d9bf2bcc402799c4a9e6bf8f47d8574c, type: 3}
   - {fileID: 8300000, guid: bd0196c617b674c4d80c769e89b179bd, type: 3}
   - {fileID: 8300000, guid: 06ebd6b27ba2a864eb824567b3474b66, type: 3}
+  soundContainer: {fileID: 11400000, guid: 428cc7f08807848ed93e594f977c2e3f, type: 2}
   laptop: {fileID: 605288159}
   isGameOver: 0
 --- !u!1 &53481580996266117

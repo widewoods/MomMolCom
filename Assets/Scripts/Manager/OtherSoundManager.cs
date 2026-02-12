@@ -9,6 +9,7 @@ public class OtherSoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource outsideSource;
     [SerializeField] private List<AudioClip> outsideClips;
+    [SerializeField] private SoundContainer soundContainer;
     private int outsideIndex = 0; // 다음에 재생할 외부 소리 인덱스
 
     private float minUpInterval = 5.0f;
@@ -51,7 +52,7 @@ public class OtherSoundManager : MonoBehaviour
         if (upstairsClips.Count == 0 || upstairsSource == null) return;
 
         int randomIndex = Random.Range(0, upstairsClips.Count);
-        upstairsSource.volume = 0.35f;
+        upstairsSource.volume = soundContainer.audioSounds[2].volume;
         upstairsSource.pitch = Random.Range(0.9f, 1.1f);
         upstairsSource.PlayOneShot(upstairsClips[randomIndex]);
     }
@@ -61,7 +62,7 @@ public class OtherSoundManager : MonoBehaviour
         if (outsideClips.Count == 0 || outsideSource == null) return;
 
         // 현재 순서의 클립 재생
-        outsideSource.volume = 0.5f;
+        outsideSource.volume = soundContainer.audioSounds[1].volume;
         outsideSource.pitch = Random.Range(0.9f, 1.1f);
         outsideSource.PlayOneShot(outsideClips[outsideIndex]);
 

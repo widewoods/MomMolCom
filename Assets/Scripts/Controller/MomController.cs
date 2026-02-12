@@ -17,6 +17,7 @@ public class MomController : MonoBehaviour
 
     public AudioSource audioSource;      // ���ڱ� �Ҹ��� �� ����� �ҽ� ������Ʈ
     public List<AudioClip> footstepsClips;      // ���ڱ� MP3 ����
+    [SerializeField] private SoundContainer soundContainer;
 
     //public GameObject momObject;         // ���� ���� ������Ʈ (�湮 ��)
 
@@ -106,6 +107,7 @@ public class MomController : MonoBehaviour
             audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.loop = true;
             audioSource.clip = footstepsClip;
+            audioSource.volume = soundContainer.audioSounds[0].volume;
             audioSource.Play();
         }
     }
