@@ -25,6 +25,7 @@ public class MomController : MonoBehaviour
     public PlayerContorller3D laptop;
 
     public bool isGameOver = false;
+    public System.Action OnGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +125,7 @@ public class MomController : MonoBehaviour
     void GameOver()
     {
         isGameOver = true;
+        OnGameOver?.Invoke();
         
         // ���� ���� �� �Ҹ��� ���� �ִٸ� ���ϴ�
         if (audioSource != null) audioSource.Stop();
