@@ -3863,8 +3863,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1271172739}
-  footstepsClip: {fileID: 8300000, guid: d9bf2bcc402799c4a9e6bf8f47d8574c, type: 3}
+  footstepsClips: []
   laptop: {fileID: 605288159}
+  isGameOver: 0
 --- !u!1 &53481580996266117
 GameObject:
   m_ObjectHideFlags: 0
