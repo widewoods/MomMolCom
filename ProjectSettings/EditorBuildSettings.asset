@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: 0d6197895238e4783bab73b95c6f9f78
+  - enabled: 1
+    path: Assets/Scenes/MomMolScene.unity
+    guid: 78cab34b93537485fa9968ea6c832269
+  - enabled: 0
     path: Assets/Scenes/RhythmGameScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

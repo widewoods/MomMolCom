@@ -51,7 +51,7 @@ public class OtherSoundManager : MonoBehaviour
         if (upstairsClips.Count == 0 || upstairsSource == null) return;
 
         int randomIndex = Random.Range(0, upstairsClips.Count);
-        upstairsSource.volume = 0.5f;
+        upstairsSource.volume = 0.35f;
         upstairsSource.pitch = Random.Range(0.9f, 1.1f);
         upstairsSource.PlayOneShot(upstairsClips[randomIndex]);
     }
