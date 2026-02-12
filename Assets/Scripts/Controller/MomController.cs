@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class MomController : MonoBehaviour
 {
@@ -13,25 +14,31 @@ public class MomController : MonoBehaviour
     private float minMomStayDuration = 1f;
     private float maxMomStayDuration = 4f; 
 
-    private float leavingDuration = 2.0f;  // ���� �� ���ڱ� �Ҹ� �鸮�� �ð�
+    private float leavingDuration = 2.0f;
 
-    public AudioSource audioSource;      // ���ڱ� �Ҹ��� �� ����� �ҽ� ������Ʈ
-    public List<AudioClip> footstepsClips;      // ���ڱ� MP3 ����
+    public AudioSource audioSource;
+    public List<AudioClip> footstepsClips;
     [SerializeField] private SoundContainer soundContainer;
 
-    //public GameObject momObject;         // ���� ���� ������Ʈ (�湮 ��)
+    [SerializeField] private GameObject momObject;
+    [SerializeField] private Transform start;
+    [SerializeField] private Transform middle;
+    [SerializeField] private Transform end;
 
-    // ��Ʈ�� ���� (�ܺ� ��ũ��Ʈ���� �� ������ �����ϰų�, ������Ƽ�� �����ؾ� ��)
-    public PlayerContorller3D laptop;
+    [SerializeField] private GameObject momHead;
+    [SerializeField] private Transform lookOrigin;
+    [SerializeField] private Transform lookTarget;
+    [SerializeField] private Animator momAnimator;
+
+    [SerializeField] private PlayerContorller3D laptop;
 
     public bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //if (momObject != null) momObject.SetActive(false);
+        // if (momObject != null) momObject.SetActive(false);
 
-        // ������ ���� ���� ����
         StartCoroutine(MomPatternRoutine());
     }
 
@@ -41,65 +48,105 @@ public class MomController : MonoBehaviour
         
     }
 
-    // ���� �ൿ ���� �ڷ�ƾ
     IEnumerator MomPatternRoutine()
     {
         while (!isGameOver)
         {
-            // 1. ������ �ð���ŭ ��� (��ȭ�ο� �ð�)
             float randomWait = Random.Range(minSpawnTime, maxSpawnTime);
+            float warningDuration = Random.Range(minWarningDuration, maxWarningDuration);
+            float momStayDuration = Random.Range(minMomStayDuration, maxMomStayDuration);
             yield return new WaitForSeconds(randomWait);
 
-            // 2. ���ڱ� �Ҹ� ��� (��� �ܰ�)
-            Debug.Log("���ڱ� �Ҹ��� �鸲");
+            Debug.Log("Mom Start");
+            StartCoroutine(MomComeAndArrive(warningDuration, momStayDuration));
 
             AudioClip footstepsClip = footstepsClips[Random.Range(0, footstepsClips.Count)];
-            PlayFootstepSound(footstepsClip); // �Ҹ� ��� �Լ� ȣ��
+            PlayFootstepSound(footstepsClip);
 
-            // 3. N��(warningDuration) ��ŭ ��� (�÷��̾ ��Ʈ���� ���� �ð�)
-            float warningDuration = Random.Range(minWarningDuration, maxWarningDuration);
             yield return new WaitForSeconds(warningDuration);
 
-            // 4. ���� ���� �� ��Ʈ�� Ȯ��
             StopFootstepSound();
 
-            Debug.Log("���� ����");
+            Debug.Log("Mom Arrive");
 
             float timer = 0f;
             bool caught = false;
 
-            float momStayDuration = Random.Range(minMomStayDuration, maxMomStayDuration);
             while (timer < momStayDuration)
             {
-                // �ǽð����� ��Ʈ���� �����ִ��� üũ
                 if (laptop.openLaptop)
                 {
-                    Debug.Log("�������� �ɸ�");
+                    Debug.Log("You Caught by Mom!");
                     GameOver();
                     caught = true;
-                    break; // ���� ���� Ż��
+                    break;
                 }
 
-                // ���� �����ӱ��� ����ϸ� �ð��� ���
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            // ���� �ɷȴٸ� �� �̻� ������ �������� �ʰ� ����
             if (caught) yield break;
 
-            Debug.Log("���� ����");
+            Debug.Log("Mom Leaving");
 
-            PlayFootstepSound(footstepsClip); // �ٽ� ���ڱ� �Ҹ� ���
+            PlayFootstepSound(footstepsClip); 
 
-            // ������ ���ڱ� �Ҹ��� �󸶳� ������� (��: 2��)
             yield return new WaitForSeconds(leavingDuration);
 
             StopFootstepSound();
         }
     }
 
-    // �Ҹ� ����� ���ϰ� �ϱ� ���� ���� �Լ�
+    IEnumerator MomComeAndArrive(float comeDuration, float stayDuration)
+    {
+        float middleToEnd = 1f;
+        float startToMiddle = comeDuration - middleToEnd;
+        // Move Mom from start to middle
+        yield return MomMove(startToMiddle, start, middle);
+
+        // Move Mom from middle to end
+        yield return MomMove(middleToEnd, middle, end);
+
+        // Wait for stay duration
+        // Mom 애니메이션 멈추기
+        momAnimator.enabled = false;
+        StartCoroutine(MomLook(lookOrigin, lookTarget, 0.5f));
+        yield return new WaitForSeconds(stayDuration-0.5f);
+        yield return StartCoroutine(MomLook(lookTarget, lookOrigin, 0.5f));
+        momAnimator.enabled = true;
+
+        float endToMiddle = 1f;
+        // Move Mom from end to middle
+        yield return MomMove(endToMiddle, end, middle);
+
+        // Move Mom from middle to start
+        yield return MomMove(leavingDuration-endToMiddle, middle, start);
+    }
+    
+    IEnumerator MomMove(float duration, Transform from, Transform to)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            momObject.transform.position = Vector3.Lerp(from.position, to.position, timer / duration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        momObject.transform.position = to.position;
+    }
+
+    IEnumerator MomLook(Transform from, Transform to, float duration)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            momHead.transform.position = Vector3.Lerp(from.position, to.position, timer / duration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     void PlayFootstepSound(AudioClip footstepsClip)
     {
         if (audioSource != null && footstepsClips.Count > 0)
@@ -112,7 +159,6 @@ public class MomController : MonoBehaviour
         }
     }
 
-    // �Ҹ� ������ ���ϰ� �ϱ� ���� ���� �Լ�
     void StopFootstepSound()
     {
         if (audioSource != null)
@@ -125,10 +171,8 @@ public class MomController : MonoBehaviour
     {
         isGameOver = true;
         
-        // ���� ���� �� �Ҹ��� ���� �ִٸ� ���ϴ�
         if (audioSource != null) audioSource.Stop();
 
-        // ���⿡ ���� ���� UI ȣ���̳� �� ����� ���� �߰�
         Debug.Log("<color=red>Game Over! �������� ���׽��ϴ�.</color>");
     }
 }
