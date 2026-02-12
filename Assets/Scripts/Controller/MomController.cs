@@ -16,14 +16,14 @@ public class MomController : MonoBehaviour
     private float leavingDuration = 2.0f;  // ���� �� ���ڱ� �Ҹ� �鸮�� �ð�
 
     public AudioSource audioSource;      // ���ڱ� �Ҹ��� �� ����� �ҽ� ������Ʈ
-    public AudioClip footstepsClip;      // ���ڱ� MP3 ����
+    public List<AudioClip> footstepsClips;      // ���ڱ� MP3 ����
 
     //public GameObject momObject;         // ���� ���� ������Ʈ (�湮 ��)
 
     // ��Ʈ�� ���� (�ܺ� ��ũ��Ʈ���� �� ������ �����ϰų�, ������Ƽ�� �����ؾ� ��)
     public PlayerContorller3D laptop;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +51,9 @@ public class MomController : MonoBehaviour
 
             // 2. ���ڱ� �Ҹ� ��� (��� �ܰ�)
             Debug.Log("���ڱ� �Ҹ��� �鸲");
-            PlayFootstepSound(); // �Ҹ� ��� �Լ� ȣ��
+
+            AudioClip footstepsClip = footstepsClips[Random.Range(0, footstepsClips.Count)];
+            PlayFootstepSound(footstepsClip); // �Ҹ� ��� �Լ� ȣ��
 
             // 3. N��(warningDuration) ��ŭ ��� (�÷��̾ ��Ʈ���� ���� �ð�)
             float warningDuration = Random.Range(minWarningDuration, maxWarningDuration);
@@ -87,7 +89,7 @@ public class MomController : MonoBehaviour
 
             Debug.Log("���� ����");
 
-            PlayFootstepSound(); // �ٽ� ���ڱ� �Ҹ� ���
+            PlayFootstepSound(footstepsClip); // �ٽ� ���ڱ� �Ҹ� ���
 
             // ������ ���ڱ� �Ҹ��� �󸶳� ������� (��: 2��)
             yield return new WaitForSeconds(leavingDuration);
@@ -97,10 +99,12 @@ public class MomController : MonoBehaviour
     }
 
     // �Ҹ� ����� ���ϰ� �ϱ� ���� ���� �Լ�
-    void PlayFootstepSound()
+    void PlayFootstepSound(AudioClip footstepsClip)
     {
-        if (audioSource != null && footstepsClip != null)
+        if (audioSource != null && footstepsClips.Count > 0)
         {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.loop = true;
             audioSource.clip = footstepsClip;
             audioSource.Play();
         }
