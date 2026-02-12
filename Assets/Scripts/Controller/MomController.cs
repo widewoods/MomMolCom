@@ -11,16 +11,16 @@ public class MomController : MonoBehaviour
     private float maxWarningDuration = 4f;
  
     private float minMomStayDuration = 1f;
-    private float maxMomStayDuration = 4f;
+    private float maxMomStayDuration = 4f; 
 
-    private float leavingDuration = 2.0f;  // ³ª°¥ ¶§ ¹ßÀÚ±¹ ¼Ò¸® µé¸®´Â ½Ã°£
+    private float leavingDuration = 2.0f;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ ï¿½é¸®ï¿½ï¿½ ï¿½Ã°ï¿½
 
-    public AudioSource audioSource;      // ¹ßÀÚ±¹ ¼Ò¸®¸¦ ³¾ ¿Àµð¿À ¼Ò½º ÄÄÆ÷³ÍÆ®
-    public List<AudioClip> footstepsClips;      // ¹ßÀÚ±¹ MP3 ÆÄÀÏ
+    public AudioSource audioSource;      // ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public List<AudioClip> footstepsClips;      // ï¿½ï¿½ï¿½Ú±ï¿½ MP3 ï¿½ï¿½ï¿½ï¿½
 
-    //public GameObject momObject;         // ¾ö¸¶ °ÔÀÓ ¿ÀºêÁ§Æ® (¹æ¹® µî)
+    //public GameObject momObject;         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® (ï¿½æ¹® ï¿½ï¿½)
 
-    // ³ëÆ®ºÏ »óÅÂ (¿ÜºÎ ½ºÅ©¸³Æ®¿¡¼­ ÀÌ º¯¼ö¸¦ Á¦¾îÇÏ°Å³ª, ÇÁ·ÎÆÛÆ¼·Î ¿¬°áÇØ¾ß ÇÔ)
+    // ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Üºï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½)
     public PlayerContorller3D laptop;
 
     public bool isGameOver = false;
@@ -30,7 +30,7 @@ public class MomController : MonoBehaviour
     {
         //if (momObject != null) momObject.SetActive(false);
 
-        // ¾ö¸¶°¡ ¿À´Â ÆÐÅÏ ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(MomPatternRoutine());
     }
 
@@ -40,29 +40,29 @@ public class MomController : MonoBehaviour
         
     }
 
-    // ¾ö¸¶ Çàµ¿ ÆÐÅÏ ÄÚ·çÆ¾
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
     IEnumerator MomPatternRoutine()
     {
         while (!isGameOver)
         {
-            // 1. ·£´ýÇÑ ½Ã°£¸¸Å­ ´ë±â (ÆòÈ­·Î¿î ½Ã°£)
+            // 1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ (ï¿½ï¿½È­ï¿½Î¿ï¿½ ï¿½Ã°ï¿½)
             float randomWait = Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(randomWait);
 
-            // 2. ¹ßÀÚ±¹ ¼Ò¸® Àç»ý (°æ°í ´Ü°è)
-            Debug.Log("¹ßÀÚ±¹ ¼Ò¸®°¡ µé¸²");
+            // 2. ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ ï¿½Ü°ï¿½)
+            Debug.Log("ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½é¸²");
 
             AudioClip footstepsClip = footstepsClips[Random.Range(0, footstepsClips.Count)];
-            PlayFootstepSound(footstepsClip); // ¼Ò¸® Àç»ý ÇÔ¼ö È£Ãâ
+            PlayFootstepSound(footstepsClip); // ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½
 
-            // 3. NÃÊ(warningDuration) ¸¸Å­ ´ë±â (ÇÃ·¹ÀÌ¾î°¡ ³ëÆ®ºÏÀ» µ¤À» ½Ã°£)
+            // 3. Nï¿½ï¿½(warningDuration) ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½)
             float warningDuration = Random.Range(minWarningDuration, maxWarningDuration);
             yield return new WaitForSeconds(warningDuration);
 
-            // 4. ¾ö¸¶ µîÀå ¹× ³ëÆ®ºÏ È®ÀÎ
+            // 4. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ È®ï¿½ï¿½
             StopFootstepSound();
 
-            Debug.Log("¾ö¸¶ µé¾î¿È");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
             float timer = 0f;
             bool caught = false;
@@ -70,35 +70,35 @@ public class MomController : MonoBehaviour
             float momStayDuration = Random.Range(minMomStayDuration, maxMomStayDuration);
             while (timer < momStayDuration)
             {
-                // ½Ç½Ã°£À¸·Î ³ëÆ®ºÏÀÌ ¿­·ÁÀÖ´ÂÁö Ã¼Å©
+                // ï¿½Ç½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
                 if (laptop.openLaptop)
                 {
-                    Debug.Log("¾ö¸¶ÇÑÅ× °É¸²");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¸ï¿½");
                     GameOver();
                     caught = true;
-                    break; // °¨½Ã ·çÇÁ Å»Ãâ
+                    break; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å»ï¿½ï¿½
                 }
 
-                // ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö ´ë±âÇÏ¸ç ½Ã°£À» Àé´Ù
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            // ¸¸¾à °É·È´Ù¸é ´õ ÀÌ»ó ÆÐÅÏÀ» ÁøÇàÇÏÁö ¾Ê°í Á¾·á
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½É·È´Ù¸ï¿½ ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (caught) yield break;
 
-            Debug.Log("¾ö¸¶ ³ª°¨");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
-            PlayFootstepSound(footstepsClip); // ´Ù½Ã ¹ßÀÚ±¹ ¼Ò¸® Àç»ý
+            PlayFootstepSound(footstepsClip); // ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½
 
-            // ³ª°¡´Â ¹ßÀÚ±¹ ¼Ò¸®¸¦ ¾ó¸¶³ª µé·ÁÁÙÁö (¿¹: 2ÃÊ)
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú±ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ó¸¶³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: 2ï¿½ï¿½)
             yield return new WaitForSeconds(leavingDuration);
 
             StopFootstepSound();
         }
     }
 
-    // ¼Ò¸® Àç»ýÀ» ÆíÇÏ°Ô ÇÏ±â À§ÇØ ¸¸µç ÇÔ¼ö
+    // ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void PlayFootstepSound(AudioClip footstepsClip)
     {
         if (audioSource != null && footstepsClips.Count > 0)
@@ -110,7 +110,7 @@ public class MomController : MonoBehaviour
         }
     }
 
-    // ¼Ò¸® Á¤Áö¸¦ ÆíÇÏ°Ô ÇÏ±â À§ÇØ ¸¸µç ÇÔ¼ö
+    // ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     void StopFootstepSound()
     {
         if (audioSource != null)
@@ -123,10 +123,10 @@ public class MomController : MonoBehaviour
     {
         isGameOver = true;
         
-        // °ÔÀÓ ¿À¹ö ½Ã ¼Ò¸®°¡ ³ª°í ÀÖ´Ù¸é ²ü´Ï´Ù
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½
         if (audioSource != null) audioSource.Stop();
 
-        // ¿©±â¿¡ °ÔÀÓ ¿À¹ö UI È£ÃâÀÌ³ª ¾À Àç½ÃÀÛ ·ÎÁ÷ Ãß°¡
-        Debug.Log("<color=red>Game Over! ¾ö¸¶ÇÑÅ× µéÄ×½À´Ï´Ù.</color>");
+        // ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI È£ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        Debug.Log("<color=red>Game Over! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×½ï¿½ï¿½Ï´ï¿½.</color>");
     }
 }
