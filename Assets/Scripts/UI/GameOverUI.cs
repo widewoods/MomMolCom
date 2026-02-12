@@ -12,10 +12,16 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverText;
     [SerializeField] private MomController momController;
 
+    [SerializeField] private Transform cameraTransform;
+
+
+    private Quaternion originalRotation;
+    private Quaternion targetRotation;
 
     void OnEnable()
     {
         canvas.enabled = false;
+        originalRotation = cameraTransform.rotation;
         momController.OnGameOver += HandleGameOver;
     }
 
@@ -27,6 +33,7 @@ public class GameOverUI : MonoBehaviour
     public void HandleGameOver()
     {
         DisableGame();
+        StartCoroutine(FaceMom());
         StartCoroutine(FadeToBlack(1f));
     }
 
@@ -47,6 +54,20 @@ public class GameOverUI : MonoBehaviour
             timer += Time.deltaTime;
             background.color = new Color(0.05f, 0.05f, 0.05f, timer / fadeDuration);
             gameOverText.color = new Color(gameOverText.color.r, gameOverText.color.g, gameOverText.color.b, timer / fadeDuration);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator FaceMom()
+    {
+        float timer = 0f;
+
+        while (timer < 1)
+        {
+            timer += Time.deltaTime;
+
+            targetRotation = originalRotation * Quaternion.Euler(0, -90f, 0);
+            cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, targetRotation, Time.deltaTime * 10f);
             yield return new WaitForEndOfFrame();
         }
     }
